@@ -309,7 +309,7 @@ class Captcha
             'sensitive' => $generator['sensitive'],
             'key' => $generator['key'],
             'img' => $this->image->encode()->toDataUri()
-        ] : new Response($this->image->encode(), 200, [
+        ] : new Response($this->image->encodeByMediaType('image/jpg'), 200, [
             'Content-Type' => 'image/jpeg',
             'Content-Disposition' => 'inline; filename="image.jpg"',
         ]);
@@ -456,8 +456,8 @@ class Captcha
             $this->image->drawLine(function (LineFactory $line) use ($i) {
                 $line->from(rand(0, $this->image->width()) + $i * rand(0, $this->image->height()) , rand(0, $this->image->height()));
                 $line->to( rand(0, $this->image->width()), rand(0, $this->image->height()));
-                $line->color('ff00ff'); // color of line
-                $line->width(5); // line width in pixels
+                $line->color($this->fontColors[rand(0, count($this->fontColors) - 1)]); // color of line
+                $line->width(1); // line width in pixels
             });
         }
 
